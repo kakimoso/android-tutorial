@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SplitTheCost</string>
+    <string name="numPeople">人数 ：</string>
+    <string name="people">人</string>
+    <string name="money">金額 ：</string>
+    <string name="yen">円</string>
+    <string name="calc">計算する</string>
+    <string name="unitText">一人当たりの金額を</string>
+    <string name="result">0</string>
+    <string name="fraction">端数</string>
+    <string name="dlg_fraction_title">端数を選択してください</string>
+    <string name="roundup_title">端数切り上げ</string>
+    <string name="setting_name">設定</string>
+</resources>
