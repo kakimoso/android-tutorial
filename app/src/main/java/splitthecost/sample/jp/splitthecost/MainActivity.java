@@ -1,6 +1,8 @@
 package splitthecost.sample.jp.splitthecost;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
                 EditText etxtMoney = (EditText) findViewById(R.id.eTxtYen);
                 TextView txtResult = (TextView) findViewById(R.id.calcResult);
 
+                // 設定を取得
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                String frac = pref.getString(SettingPrefActivity.PREF_KEY_FRACTION, "500");
+                Boolean roundup = pref.getBoolean(SettingPrefActivity.PREF_KEY_ROUNDUP, false);
+                int fracVal = Integer.parseInt(frac);
+
                 // 入力内容を取得
                 String strNum = etxtNum.getText().toString();
                 String strMoney = etxtMoney.getText().toString();
@@ -34,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
                 // 割り勘計算
                 int result = money / num;
+
+                // 切り上げ
+                if (roundup && result % fracVal != 0) {
+                    result += fracVal;
+                }
+
+                // 端数処理
+                result = result / fracVal * fracVal;
 
                 // 結果表示用テキストに設定
                 txtResult.setText(Integer.toString(result));
