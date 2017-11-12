@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText etxtNum = (EditText) findViewById(R.id.eTxtNum);
                 EditText etxtMoney = (EditText) findViewById(R.id.eTxtYen);
                 TextView txtResult = (TextView) findViewById(R.id.calcResult);
+                TextView errorMessage = (TextView)findViewById(R.id.errorMessage);
 
                 // 設定を取得
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -33,26 +34,33 @@ public class MainActivity extends AppCompatActivity {
                 int fracVal = Integer.parseInt(frac);
 
                 // 入力内容を取得
-                String strNum = etxtNum.getText().toString();
-                String strMoney = etxtMoney.getText().toString();
+                try {
+                    String strNum = etxtNum.getText().toString();
+                    String strMoney = etxtMoney.getText().toString();
 
-                // 数値に変換
-                int num = Integer.parseInt(strNum);
-                int money = Integer.parseInt(strMoney);
+                    // 数値に変換
+                    int num = Integer.parseInt(strNum);
+                    int money = Integer.parseInt(strMoney);
 
-                // 割り勘計算
-                int result = money / num;
+                    // 割り勘計算
+                    int result = money / num;
 
-                // 切り上げ
-                if (roundup && result % fracVal != 0) {
-                    result += fracVal;
+                    // 切り上げ
+                    if (roundup && result % fracVal != 0) {
+                        result += fracVal;
+                    }
+
+                    // 端数処理
+                    result = result / fracVal * fracVal;
+
+                    // 結果表示用テキストに設定
+                    txtResult.setText(Integer.toString(result));
+                    errorMessage.setText("　");
+                }catch(NumberFormatException e){
+                    e.printStackTrace();
+                    txtResult.setText("0");
+                    errorMessage.setText("人数と金額を正しく入力してください");
                 }
-
-                // 端数処理
-                result = result / fracVal * fracVal;
-
-                // 結果表示用テキストに設定
-                txtResult.setText(Integer.toString(result));
             }
         });
     }
