@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 Boolean roundup = pref.getBoolean(SettingPrefActivity.PREF_KEY_ROUNDUP, false);
                 int fracVal = Integer.parseInt(frac);
 
-                // 入力内容を取得
                 try {
+                    // 入力内容を取得
                     String strNum = etxtNum.getText().toString();
                     String strMoney = etxtMoney.getText().toString();
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     result = result / fracVal * fracVal;
 
                     // 結果表示用テキストに設定
-                    txtResult.setText(Integer.toString(result));
+                    txtResult.setText(String.valueOf(result));
                     errorMessage.setText("　");
                 }catch(NumberFormatException e){
                     e.printStackTrace();
@@ -79,12 +79,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 画面遷移メソッド
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // 設定ボタン押下処理
+                // 遷移先のアクティビティを指定
                 Intent intent = new Intent(MainActivity.this, SettingPrefActivity.class);
+                // 遷移処理
                 startActivity(intent);
                 break;
             default:
